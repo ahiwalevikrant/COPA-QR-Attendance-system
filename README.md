@@ -2,7 +2,7 @@
 
 A modern, web-based attendance management system using QR code scanning. Built with vanilla JavaScript, HTML5, and CSS with a sleek glassmorphism UI design.
 
-**Live Demo:** [GitHub Pages Link](#deployment)
+**Live Demo:** [GitHub Pages Link](https://ahiwalevikrant.github.io/COPA-QR-Attendance-system/)
 
 ---
 
