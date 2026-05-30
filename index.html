@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>COPA ITI - QR Attendance Management System</title>
   
   <!-- Modern Fonts -->
@@ -66,6 +66,13 @@
       padding: 0;
     }
 
+    html {
+      width: 100%;
+      min-height: 100%;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--bg-dark);
       background-image: 
@@ -75,9 +82,24 @@
       color: var(--text-main);
       font-family: var(--font-body);
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    .nav-link,
+    .table-action-btn {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -309,6 +331,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
     }
 
     .nav-logo {
@@ -326,12 +349,16 @@
     .nav-title {
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
 
     .nav-title h1 {
       font-size: 1.15rem;
       font-weight: 700;
       line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .nav-title span {
@@ -339,6 +366,9 @@
       color: var(--text-muted);
       font-weight: 500;
       letter-spacing: 0.05em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .nav-user {
@@ -401,6 +431,7 @@
       flex: 1;
       padding: 0;
       position: relative;
+      min-width: 0;
     }
 
     /* SIDEBAR NAVIGATION */
@@ -471,6 +502,7 @@
       max-width: 1400px;
       margin: 0 auto;
       width: 100%;
+      min-width: 0;
     }
 
     .page-section {
@@ -487,6 +519,7 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 32px;
+      gap: 16px;
     }
 
     .page-header-info h2 {
@@ -688,6 +721,7 @@
       display: grid;
       grid-template-columns: 1.2fr 1fr;
       gap: 32px;
+      min-width: 0;
     }
 
     @media (max-width: 900px) {
@@ -735,12 +769,19 @@
       width: 100% !important;
       height: 100% !important;
       border: none !important;
+      overflow: hidden !important;
     }
 
     #qr-scanner-element video {
       object-fit: cover !important;
       width: 100% !important;
       height: 100% !important;
+      display: block !important;
+    }
+
+    #qr-scanner-element canvas,
+    #qr-scanner-element img {
+      max-width: 100% !important;
     }
 
     /* Remove html5-qrcode standard visual labels */
@@ -754,6 +795,7 @@
       gap: 12px;
       margin-top: 20px;
       width: 100%;
+      flex-wrap: wrap;
     }
 
     .btn {
@@ -976,6 +1018,7 @@
     .table-container {
       width: 100%;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       border: 1px solid var(--border-color);
       border-radius: 14px;
       background: rgba(18, 20, 38, 0.4);
@@ -983,6 +1026,7 @@
 
     .modern-table {
       width: 100%;
+      min-width: 720px;
       border-collapse: collapse;
       text-align: left;
       font-size: 0.9rem;
@@ -1106,6 +1150,17 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .student-card-details {
+      min-width: 0;
+    }
+
+    .student-card-details h4,
+    .student-card-details p {
+      overflow-wrap: anywhere;
     }
 
     .student-card-details h4 {
@@ -1150,6 +1205,9 @@
       border-radius: 20px;
       width: 100%;
       max-width: 480px;
+      max-height: calc(100dvh - 32px);
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
       box-shadow: var(--shadow-md), 0 0 50px rgba(99, 102, 241, 0.15);
       transform: scale(0.95);
@@ -1200,6 +1258,8 @@
 
     .modal-body {
       padding: 24px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .modal-footer {
@@ -1401,6 +1461,323 @@
     @media (max-width: 600px) {
       .form-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .navbar {
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 16px;
+      }
+
+      .nav-logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        flex: 0 0 auto;
+      }
+
+      .nav-logo-section {
+        flex: 1;
+      }
+
+      .nav-title h1 {
+        font-size: 1rem;
+      }
+
+      .nav-title span {
+        max-width: 48vw;
+        font-size: 0.65rem;
+      }
+
+      .nav-user {
+        gap: 8px;
+        flex: 0 0 auto;
+      }
+
+      .user-badge {
+        padding: 6px;
+      }
+
+      .user-name {
+        display: none;
+      }
+
+      .logout-btn span {
+        display: none;
+      }
+
+      .app-main {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: sticky;
+        top: 63px;
+        z-index: 90;
+        flex-direction: row;
+        gap: 8px;
+        padding: 10px 12px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        background: rgba(9, 10, 22, 0.92);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      .sidebar-menu-title {
+        display: none;
+      }
+
+      .nav-link {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 10px 12px;
+        font-size: 0.85rem;
+      }
+
+      .content-view {
+        padding: 22px 16px 28px;
+      }
+
+      .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 22px;
+      }
+
+      .page-header-info h2 {
+        font-size: 1.55rem;
+      }
+
+      .page-header-info p {
+        font-size: 0.88rem;
+      }
+
+      .page-header-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .stat-card,
+      .glass-card {
+        border-radius: 16px;
+        padding: 18px;
+      }
+
+      .scanner-view-container {
+        gap: 18px;
+      }
+
+      .qr-reader-wrapper {
+        max-width: none;
+        aspect-ratio: 1/1;
+      }
+
+      .chart-container {
+        height: 260px;
+      }
+
+      .table-controls,
+      .report-controls-panel,
+      .report-options {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .search-input-wrapper {
+        width: 100%;
+        max-width: none;
+      }
+
+      .filter-group,
+      .editable-days-group {
+        align-items: stretch;
+      }
+
+      .filter-group .btn,
+      .page-header-actions .btn,
+      .report-controls-panel .btn {
+        flex: 1 1 150px;
+      }
+
+      .student-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .app-footer {
+        padding: 16px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #login-container {
+        justify-content: flex-start;
+        padding: 18px 14px;
+        padding-top: max(18px, env(safe-area-inset-top));
+      }
+
+      .login-card {
+        padding: 28px 18px;
+        border-radius: 18px;
+      }
+
+      .login-card h2 {
+        font-size: 1.45rem;
+      }
+
+      .input-wrapper input,
+      .search-input-wrapper input,
+      .select-dropdown,
+      .date-input,
+      .editable-days-input {
+        font-size: 16px;
+      }
+
+      .navbar {
+        position: sticky;
+        top: 0;
+      }
+
+      .nav-title span {
+        display: none;
+      }
+
+      .sidebar {
+        top: 63px;
+      }
+
+      .nav-link span {
+        font-size: 0.8rem;
+      }
+
+      .content-view {
+        padding: 18px 12px 24px;
+      }
+
+      .page-header-info h2 {
+        font-size: 1.35rem;
+      }
+
+      .stats-grid,
+      .student-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-card {
+        min-height: 132px;
+      }
+
+      .stat-card-info p {
+        font-size: 1.9rem;
+      }
+
+      .stat-card-icon {
+        width: 44px;
+        height: 44px;
+      }
+
+      .glass-card {
+        padding: 16px;
+      }
+
+      .card-header,
+      .recent-item,
+      .scan-status-indicator {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .recent-info {
+        width: 100%;
+      }
+
+      .qr-reader-wrapper {
+        border-radius: 14px;
+        min-height: min(86vw, 390px);
+      }
+
+      .scanner-controls .btn {
+        flex: 1 1 140px;
+        min-height: 44px;
+      }
+
+      .btn {
+        min-height: 42px;
+        padding: 10px 14px;
+      }
+
+      .filter-group,
+      .filter-group input,
+      .filter-group select,
+      .filter-group .btn,
+      .report-options,
+      .editable-days-group,
+      .editable-days-group input,
+      .editable-days-group select,
+      .modal-footer .btn {
+        width: 100%;
+      }
+
+      .student-card-actions,
+      .modal-footer {
+        flex-direction: column;
+      }
+
+      .student-card-actions .btn,
+      .modal-footer .btn {
+        justify-content: center;
+      }
+
+      .modal-overlay {
+        align-items: flex-end;
+        padding: 10px;
+        padding-bottom: max(10px, env(safe-area-inset-bottom));
+      }
+
+      .modal-card {
+        max-height: calc(100dvh - 20px);
+        border-radius: 18px;
+      }
+
+      .modal-header,
+      .modal-body,
+      .modal-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .toast-container {
+        left: 12px;
+        right: 12px;
+        bottom: max(12px, env(safe-area-inset-bottom));
+      }
+
+      .toast {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .app-footer-links {
+        flex-wrap: wrap;
+        gap: 12px;
       }
     }
 
@@ -2181,10 +2558,10 @@
       renderStudents();
       generateReport();
       
-      // If user session persists in localStorage
-      if (localStorage.getItem('copa_is_logged_in') === 'true') {
-        showApp();
-      }
+      // Always start from the login screen on a fresh page open.
+      localStorage.removeItem('copa_is_logged_in');
+      document.getElementById('app-container').style.display = 'none';
+      document.getElementById('login-container').style.display = 'flex';
     });
 
     // HELPERS
@@ -2234,7 +2611,6 @@
       const pass = document.getElementById('password').value;
 
       if (user === 'admin' && pass === 'copa2026') {
-        localStorage.setItem('copa_is_logged_in', 'true');
         showToast('Access Granted! Welcome to COPA Portal.', 'success');
         showApp();
       } else {
@@ -2440,7 +2816,38 @@
     }
 
     // QR SCANNER IMPLEMENTATION (html5-qrcode)
-    function startQRScanner() {
+    function getScannerConfig() {
+      const scannerElement = document.getElementById('qr-scanner-element');
+      const width = scannerElement.clientWidth || Math.min(window.innerWidth - 32, 480);
+      const height = scannerElement.clientHeight || width;
+      const scanSize = Math.floor(Math.min(width, height) * (window.innerWidth <= 600 ? 0.82 : 0.7));
+
+      return {
+        fps: window.innerWidth <= 600 ? 10 : 15,
+        qrbox: { width: Math.max(180, Math.min(scanSize, 280)), height: Math.max(180, Math.min(scanSize, 280)) },
+        rememberLastUsedCamera: true
+      };
+    }
+
+    function setScannerIdleState() {
+      document.getElementById('btn-start-scan').style.display = 'inline-flex';
+      document.getElementById('btn-stop-scan').style.display = 'none';
+      document.getElementById('scanner-laser-element').style.display = 'none';
+
+      const indicator = document.getElementById('scanner-status-indicator');
+      indicator.className = 'scan-status-indicator ready';
+      document.getElementById('scanner-status-icon').setAttribute('data-lucide', 'aperture');
+      document.getElementById('scanner-status-title').textContent = 'Camera System Standby';
+      document.getElementById('scanner-status-text').textContent = 'Click "Start Camera" to initiate attendance scanning mode.';
+      lucide.createIcons();
+      isScanLocked = false;
+    }
+
+    async function startQRScanner() {
+      if (html5QrcodeScanner) {
+        await stopQRScanner(false);
+      }
+
       // Clear last scanned card preview
       document.getElementById('last-scanned-card').style.display = 'none';
 
@@ -2458,58 +2865,56 @@
       // Ensure scanning is unlocked when starting.
       isScanLocked = false;
 
-      // Configure HTML5 QR code scanning engine
       html5QrcodeScanner = new Html5Qrcode("qr-scanner-element");
-      
-      const config = {
-        fps: 15,
-        qrbox: function(width, height) {
-          // dynamic scanning viewfinder bounding box
-          return { width: Math.min(width * 0.7, 250), height: Math.min(height * 0.7, 250) };
-        },
-        aspectRatio: 1.333333
-      };
 
-      html5QrcodeScanner.start(
-        { facingMode: cameraFacingMode },
-        config,
-        onQRScanSuccess,
-        onQRScanFailure
-      ).catch(err => {
-        showToast(`Camera activation error: ${err}`, 'danger');
-        stopQRScanner();
-      });
+      try {
+        await html5QrcodeScanner.start(
+          { facingMode: cameraFacingMode },
+          getScannerConfig(),
+          onQRScanSuccess,
+          onQRScanFailure
+        );
+      } catch (primaryError) {
+        try {
+          await html5QrcodeScanner.start(
+            { facingMode: cameraFacingMode === "environment" ? "user" : "environment" },
+            getScannerConfig(),
+            onQRScanSuccess,
+            onQRScanFailure
+          );
+        } catch (fallbackError) {
+          showToast(`Camera activation error: ${fallbackError}`, 'danger');
+          stopQRScanner();
+        }
+      }
     }
 
-    function stopQRScanner() {
+    async function stopQRScanner(updateUI = true) {
       if (html5QrcodeScanner) {
-        html5QrcodeScanner.stop().then(() => {
+        try {
+          if (html5QrcodeScanner.isScanning) {
+            await html5QrcodeScanner.stop();
+          }
+        } catch (err) {
+          console.error("Scanner close failure:", err);
+        } finally {
+          try {
+            html5QrcodeScanner.clear();
+          } catch (err) {}
           html5QrcodeScanner = null;
-        }).catch(err => console.error("Scanner close failure:", err));
+        }
       }
 
-      document.getElementById('btn-start-scan').style.display = 'inline-flex';
-      document.getElementById('btn-stop-scan').style.display = 'none';
-      document.getElementById('scanner-laser-element').style.display = 'none';
-
-      // Standardize status UI
-      const indicator = document.getElementById('scanner-status-indicator');
-      indicator.className = 'scan-status-indicator ready';
-      document.getElementById('scanner-status-icon').setAttribute('data-lucide', 'aperture');
-      document.getElementById('scanner-status-title').textContent = 'Camera System Standby';
-      document.getElementById('scanner-status-text').textContent = 'Click "Start Camera" to initiate attendance scanning mode.';
-      lucide.createIcons();
-      // Reset scan lock when scanner is stopped.
-      isScanLocked = false;
+      if (updateUI) {
+        setScannerIdleState();
+      }
     }
 
     function toggleCameraFacing() {
       cameraFacingMode = cameraFacingMode === "user" ? "environment" : "user";
       showToast(`Switched active lens direction.`, 'info');
       if (html5QrcodeScanner && html5QrcodeScanner.isScanning) {
-        html5QrcodeScanner.stop().then(() => {
-          startQRScanner();
-        });
+        stopQRScanner(false).then(() => startQRScanner());
       }
     }
 
