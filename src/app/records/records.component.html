@@ -1,0 +1,89 @@
+<section class="page-section active animated-fade-in">
+  <div class="page-header">
+    <div class="page-header-info">
+      <h2>Attendance Database Management</h2>
+      <p>Review comprehensive active records, filter results, add manual logs, and download exports.</p>
+    </div>
+    <div class="page-header-actions" style="display: flex; gap: 12px;">
+      <button class="btn btn-secondary" type="button" (click)="openManualAttendanceModal()">
+        <i data-lucide="plus-circle" style="width: 16px; height: 16px;"></i>
+        <span>Manual Marking</span>
+      </button>
+      <button class="btn btn-success" type="button" (click)="exportToExcel()">
+        <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+        <span>Export Excel</span>
+      </button>
+      <button class="btn btn-primary" type="button" (click)="exportToPDF()">
+        <i data-lucide="file-text" style="width: 16px; height: 16px;"></i>
+        <span>Export PDF</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="glass-card" style="margin-bottom: 24px; padding: 20px;">
+    <div class="table-controls">
+      <div class="search-input-wrapper">
+        <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+        <input type="text" placeholder="Search by student name or roll number..." [(ngModel)]="searchQuery" (input)="refreshRecords()" />
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-date">Date</label>
+        <input class="date-input" type="date" [(ngModel)]="filterDate" (change)="refreshRecords()" />
+        <label for="filter-status">Status</label>
+        <select class="select-dropdown" [(ngModel)]="filterStatus" (change)="refreshRecords()">
+          <option value="all">All Statuses</option>
+          <option value="Present">Present Only</option>
+          <option value="Absent">Absent Only</option>
+        </select>
+        <button class="btn btn-secondary" type="button" (click)="clearFilters()" style="padding: 10px 14px;">Reset</button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Roll Number</th>
+            <th>Student Name</th>
+            <th>Date</th>
+            <th>Marking Time</th>
+            <th>Check-in Type</th>
+            <th>Status</th>
+            <th style="width: 100px; text-align: center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="records.length === 0">
+            <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+              No matching attendance records found in DB.
+            </td>
+          </tr>
+          <tr *ngFor="let record of records">
+            <td style="font-weight: 700; color: #a855f7;">{{ record.roll }}</td>
+            <td style="font-weight: 600;">{{ record.name }}</td>
+            <td>{{ record.date }}</td>
+            <td>{{ record.time }}</td>
+            <td style="color: var(--text-muted); font-size: 0.85rem;">{{ record.type }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="record.status === 'Present' ? 'present' : 'absent'">
+                <i data-lucide="{{ record.status === 'Present' ? 'check' : 'x' }}" style="width: 12px; height: 12px;"></i>
+                {{ record.status }}
+              </span>
+            </td>
+            <td>
+              <div class="table-actions">
+                <button class="table-action-btn edit" type="button" (click)="toggleAttendanceStatus(record)" title="Toggle Status">
+                  <i data-lucide="refresh-cw" style="width: 14px; height: 14px;"></i>
+                </button>
+                <button class="table-action-btn delete" type="button" (click)="deleteAttendanceRecord(record)" title="Delete Record">
+                  <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,136 @@
+<section class="page-section active animated-fade-in">
+  <div class="page-header">
+    <div class="page-header-info">
+      <h2>COPA ITI Batch Directory</h2>
+      <p>Add new COPA students, edit rosters, generate and print identity QR codes instantly.</p>
+    </div>
+    <div class="page-header-actions">
+      <button class="btn btn-primary" type="button" (click)="openAddStudentModal()">
+        <i data-lucide="user-plus" style="width: 16px; height: 16px;"></i>
+        <span>Add Student</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-controls" style="margin-bottom: 24px;">
+    <div class="search-input-wrapper">
+      <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+      <input type="text" placeholder="Search directory by name or roll..." [(ngModel)]="searchQuery" (input)="refreshStudents()" />
+    </div>
+  </div>
+
+  <div class="student-grid">
+    <div *ngIf="students.length === 0" style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 60px 0;">
+      No students match your active search terms.
+    </div>
+    <div class="student-card animated-fade-in" *ngFor="let student of students">
+      <div class="student-card-header">
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.25); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--primary);">
+            {{ getStudentInitials(student.name) }}
+          </div>
+          <div class="student-card-details">
+            <h4>{{ student.name }}</h4>
+            <p style="color: var(--primary); font-weight: 600;">{{ student.roll }}</p>
+          </div>
+        </div>
+        <button class="table-action-btn delete" type="button" (click)="deleteStudent(student.roll)" title="Expel Student">
+          <i data-lucide="trash-2" style="width: 15px; height: 15px;"></i>
+        </button>
+      </div>
+
+      <div style="font-size: 0.8rem; color: var(--text-muted); background: rgba(0, 0, 0, 0.15); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
+        <div>Trade: <strong style="color: white;">{{ student.trade }}</strong></div>
+        <div style="margin-top: 4px;">Session Batch: <strong style="color: white;">{{ student.session }}</strong></div>
+      </div>
+
+      <div class="student-card-actions">
+        <button class="btn btn-secondary" type="button" (click)="openQRModal(student)">
+          <i data-lucide="qr-code" style="width: 14px; height: 14px;"></i>
+          <span>View QR Badge</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="addStudentModalVisible">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Enroll New Student</h3>
+        <button class="modal-close-btn" type="button" (click)="closeAddStudentModal()">
+          <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="handleAddStudent()">
+          <div class="input-group">
+            <label for="new-student-name">Full Student Name</label>
+            <div class="input-wrapper">
+              <input id="new-student-name" type="text" placeholder="E.g., Anjali Sharma" required [(ngModel)]="newStudentName" name="newStudentName" />
+              <i data-lucide="user" style="width: 18px; height: 18px;"></i>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="new-student-roll">Roll Number (Unique ID)</label>
+            <div class="input-wrapper">
+              <input id="new-student-roll" type="text" placeholder="E.g., COPA-2026-025" required [(ngModel)]="newStudentRoll" name="newStudentRoll" />
+              <i data-lucide="hash" style="width: 18px; height: 18px;"></i>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="input-group">
+              <label for="new-student-trade">Trade Option</label>
+              <select id="new-student-trade" class="select-dropdown" [(ngModel)]="newStudentTrade" name="newStudentTrade">
+                <option>ITI COPA</option>
+                <option>ITI Electrician</option>
+                <option>ITI Fitter</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="new-student-session">Session Year</label>
+              <select id="new-student-session" class="select-dropdown" [(ngModel)]="newStudentSession" name="newStudentSession">
+                <option>2025-2026</option>
+                <option>2026-2027</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
+            <button class="btn btn-secondary" type="button" (click)="closeAddStudentModal()">Cancel</button>
+            <button class="btn btn-primary" type="submit">Enroll & Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="qrModalVisible">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Student Identity Badge</h3>
+        <button class="modal-close-btn" type="button" (click)="closeQRModal()">
+          <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
+      <div class="modal-body qr-card-container">
+        <div class="qr-code-box">
+          <img [src]="qrDataUrl" alt="QR Code" width="180" height="180" />
+        </div>
+        <div class="qr-student-info">
+          <h4>{{ qrModalStudent?.name }}</h4>
+          <p>{{ qrModalStudent?.roll }}</p>
+          <p id="qr-modal-details" style="font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-top: 6px;">GOVT ITI COPA • SESSION {{ qrModalStudent?.session }}</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" (click)="closeQRModal()">Close</button>
+        <button class="btn btn-primary" type="button" (click)="printQRCodeBadge()">
+          <i data-lucide="printer" style="width: 16px; height: 16px;"></i>
+          <span>Print Badge</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

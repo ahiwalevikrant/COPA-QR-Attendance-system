@@ -1,0 +1,103 @@
+<section class="page-section active animated-fade-in">
+  <div class="page-header">
+    <div class="page-header-info">
+      <h2>Attendance Reports</h2>
+      <p>Generate daily summaries or monthly performance reports. Export data to Excel or print directly.</p>
+    </div>
+    <div class="page-header-actions">
+      <button class="btn btn-secondary" type="button" (click)="toggleReportType()">
+        <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
+        <span>Switch to {{ reportType === 'daily' ? 'Monthly' : 'Daily' }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="report-panel">
+    <div class="report-panel-columns">
+      <div class="report-card card-shadow">
+        <h3>{{ reportTitle }}</h3>
+        <p>{{ reportSubtitle }}</p>
+      </div>
+      <div class="report-card card-shadow stats-bar" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;">
+        <div class="stat-box">
+          <span>{{ badge1 }}</span>
+        </div>
+        <div class="stat-box">
+          <span>{{ badge2 }}</span>
+        </div>
+        <div class="stat-box" *ngIf="showBadge3">
+          <span>{{ badge3 }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="report-filters card-shadow" style="padding: 18px; margin-bottom: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px;">
+    <div *ngIf="reportType === 'daily'" class="input-group">
+      <label for="report-date">Report Date</label>
+      <input id="report-date" type="date" [(ngModel)]="reportDate" (change)="generateReport()" />
+    </div>
+    <div *ngIf="reportType === 'monthly'" class="input-group">
+      <label for="report-month">Report Month</label>
+      <select id="report-month" [(ngModel)]="reportMonth" (change)="generateReport()" class="select-dropdown">
+        <option value="05">May 2026</option>
+        <option value="06">June 2026</option>
+      </select>
+    </div>
+    <div *ngIf="reportType === 'monthly'" class="input-group">
+      <label for="working-days">Working Days</label>
+      <input id="working-days" type="number" min="0" [(ngModel)]="workingDays" (input)="generateReport()" />
+    </div>
+    <div class="report-actions" style="display: flex; gap: 12px; justify-content: end; align-items: end;">
+      <button class="btn btn-secondary" type="button" (click)="exportReportExcel()">
+        <i data-lucide="file-text" style="width: 16px; height: 16px;"></i>
+        <span>Export Excel</span>
+      </button>
+      <button class="btn btn-primary" type="button" (click)="exportReportPDF()">
+        <i data-lucide="printer" style="width: 16px; height: 16px;"></i>
+        <span>Print Report</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="records-table card-shadow" style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th *ngIf="reportType === 'daily'">Roll</th>
+          <th *ngIf="reportType === 'daily'">Name</th>
+          <th *ngIf="reportType === 'daily'">Status</th>
+          <th *ngIf="reportType === 'daily'">Time</th>
+          <th *ngIf="reportType === 'daily'">Type</th>
+
+          <th *ngIf="reportType === 'monthly'">Roll</th>
+          <th *ngIf="reportType === 'monthly'">Name</th>
+          <th *ngIf="reportType === 'monthly'">Attended</th>
+          <th *ngIf="reportType === 'monthly'">Absent</th>
+          <th *ngIf="reportType === 'monthly'">Percent</th>
+          <th *ngIf="reportType === 'monthly'">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of reportRows">
+          <td *ngIf="reportType === 'daily'">{{ row.roll }}</td>
+          <td *ngIf="reportType === 'daily'">{{ row.name }}</td>
+          <td *ngIf="reportType === 'daily'">
+            <span class="badge" [ngClass]="row.badgeClass">{{ row.status }}</span>
+          </td>
+          <td *ngIf="reportType === 'daily'">{{ row.time }}</td>
+          <td *ngIf="reportType === 'daily'">{{ row.type }}</td>
+
+          <td *ngIf="reportType === 'monthly'">{{ row.student.roll }}</td>
+          <td *ngIf="reportType === 'monthly'">{{ row.student.name }}</td>
+          <td *ngIf="reportType === 'monthly'">{{ row.attendedDays }}</td>
+          <td *ngIf="reportType === 'monthly'">{{ row.absentDays }}</td>
+          <td *ngIf="reportType === 'monthly'">{{ row.percent }}%</td>
+          <td *ngIf="reportType === 'monthly'">
+            <span class="badge" [ngClass]="row.badgeStyle">{{ row.statusLabel }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

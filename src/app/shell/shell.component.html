@@ -1,0 +1,78 @@
+<div id="app-container">
+  <header class="navbar">
+    <div class="nav-logo-section">
+      <div class="nav-logo">
+        <i data-lucide="qr-code" style="width: 22px; height: 22px;"></i>
+      </div>
+      <div class="nav-title">
+        <h1>ITI COPA Attendance</h1>
+        <span>DEPARTMENT OF COMPUTER OPERATOR & PROGRAMMING ASSISTANT</span>
+      </div>
+    </div>
+
+    <div class="nav-user">
+      <button class="theme-toggle-btn" type="button" (click)="toggleTheme()">
+        <i [attr.data-lucide]="theme === 'dark' ? 'sun' : 'moon'" style="width: 16px; height: 16px;"></i>
+        <span>{{ theme === 'dark' ? 'Light Mode' : 'Dark Mode' }}</span>
+      </button>
+      <div class="user-badge">
+        <div class="user-avatar">A</div>
+        <span class="user-name">Admin Instructor</span>
+      </div>
+      <button class="logout-btn" (click)="logout()">
+        <i data-lucide="log-out" style="width: 14px; height: 14px;"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="app-main">
+    <aside class="sidebar">
+      <div class="sidebar-menu-title">Main Portal</div>
+      <button class="nav-link" [class.active]="activeTab === 'dashboard'" (click)="setTab('dashboard')">
+        <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i>
+        <span>Dashboard</span>
+      </button>
+      <button class="nav-link" [class.active]="activeTab === 'scanner'" (click)="setTab('scanner')">
+        <i data-lucide="aperture" style="width: 18px; height: 18px;"></i>
+        <span>QR Scanner</span>
+      </button>
+      <button class="nav-link" [class.active]="activeTab === 'records'" (click)="setTab('records')">
+        <i data-lucide="file-spreadsheet" style="width: 18px; height: 18px;"></i>
+        <span>Attendance Database</span>
+      </button>
+      <button class="nav-link" [class.active]="activeTab === 'students'" (click)="setTab('students')">
+        <i data-lucide="users" style="width: 18px; height: 18px;"></i>
+        <span>COPA Student Directory</span>
+      </button>
+      <button class="nav-link" [class.active]="activeTab === 'reports'" (click)="setTab('reports')">
+        <i data-lucide="bar-chart-3" style="width: 18px; height: 18px;"></i>
+        <span>Performance Reports</span>
+      </button>
+    </aside>
+
+    <main class="content-view">
+      <app-dashboard *ngIf="activeTab === 'dashboard'"></app-dashboard>
+      <app-scanner *ngIf="activeTab === 'scanner'"></app-scanner>
+      <app-records *ngIf="activeTab === 'records'"></app-records>
+      <app-students *ngIf="activeTab === 'students'"></app-students>
+      <app-reports *ngIf="activeTab === 'reports'"></app-reports>
+    </main>
+  </div>
+
+  <footer class="app-footer">
+    <div>© 2026 Government ITI - Computer Operator & Programming Assistant Trade Portal</div>
+    <div class="app-footer-links">
+      <a href="#" (click)="$event.preventDefault(); showHelp()">App Help</a>
+      <a href="#" (click)="$event.preventDefault(); showLicense()">Aesthetic License</a>
+    </div>
+  </footer>
+</div>
+
+<div class="toast-container">
+  <div class="toast" *ngFor="let toast of toasts" [ngClass]="toast.type">
+    <i data-lucide="{{ toast.type === 'success' ? 'check-circle' : toast.type === 'danger' ? 'alert-triangle' : toast.type === 'warning' ? 'alert-circle' : 'info' }}" class="toast-icon {{ toast.type }}"></i>
+    <div style="flex: 1;">{{ toast.text }}</div>
+    <button class="toast-close" (click)="removeToast(toast.id)">×</button>
+  </div>
+</div>

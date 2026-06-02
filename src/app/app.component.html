@@ -1,0 +1,2 @@
+<app-login *ngIf="!(isLoggedIn$ | async)"></app-login>
+<app-shell *ngIf="isLoggedIn$ | async"></app-shell>

@@ -1,0 +1,37 @@
+<div id="login-container" class="animated-fade-in">
+  <div class="login-card">
+    <div class="logo-badge">
+      <i data-lucide="qr-code" style="width: 32px; height: 32px;"></i>
+    </div>
+    <h2>ITI COPA Portal</h2>
+    <p>Secure Attendance Scanning Platform</p>
+
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <div class="input-wrapper">
+          <input id="username" name="username" type="text" placeholder="Enter username" required [(ngModel)]="username" />
+          <i data-lucide="user" style="width: 18px; height: 18px;"></i>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <input id="password" name="password" type="password" placeholder="Enter password" required [(ngModel)]="password" />
+          <i data-lucide="lock" style="width: 18px; height: 18px;"></i>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn">
+        <span>Access System</span>
+        <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+      </button>
+    </form>
+
+    <div class="login-credentials-tip">
+      <div>Demo Username: <span>admin</span></div>
+      <div>Demo Password: <span>copa2026</span></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+<section class="page-section active animated-fade-in">
+  <div class="page-header">
+    <div class="page-header-info">
+      <h2>COPA ITI Analytics Hub</h2>
+      <p>Real-time attendance summaries, class statistics, and trends.</p>
+    </div>
+    <div class="page-header-actions">
+      <button class="btn btn-primary" type="button" (click)="scrollToShell()">
+        <i data-lucide="aperture" style="width: 16px; height: 16px;"></i>
+        <span>Open Scanner</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-card-info">
+        <h3>Total Strength</h3>
+        <p>{{ stats.totalStudents }}</p>
+        <div class="progress-bar-wrapper">
+          <div class="progress-bar-label">
+            <span>Active COPA Batch</span>
+            <span>100%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card-icon blue">
+        <i data-lucide="users" style="width: 24px; height: 24px;"></i>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-info">
+        <h3>Present Today</h3>
+        <p>{{ stats.presentToday }}</p>
+        <div class="progress-bar-wrapper">
+          <div class="progress-bar-label">
+            <span>Present Rate</span>
+            <span>{{ stats.presentRate }}%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="progress-present-rate" class="progress-bar-fill" [style.width.%]="stats.presentRate"></div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card-icon green">
+        <i data-lucide="user-check" style="width: 24px; height: 24px;"></i>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-info">
+        <h3>Absent Today</h3>
+        <p>{{ stats.absentToday }}</p>
+        <div class="progress-bar-wrapper">
+          <div class="progress-bar-label">
+            <span>Absent Rate</span>
+            <span>{{ stats.absentRate }}%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="progress-absent-rate" class="progress-bar-fill" style="background: var(--danger);" [style.width.%]="stats.absentRate"></div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card-icon yellow">
+        <i data-lucide="user-x" style="width: 24px; height: 24px;"></i>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-info">
+        <h3>Monthly Avg Rate</h3>
+        <p>{{ stats.monthlyRate }}</p>
+        <div class="progress-bar-wrapper">
+          <div class="progress-bar-label">
+            <span>Target: 80%</span>
+            <span>Satisfactorily</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: {{ stats.monthlyRate }}; background: var(--secondary);"></div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card-icon purple">
+        <i data-lucide="trending-up" style="width: 24px; height: 24px;"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-layout">
+    <div class="glass-card">
+      <div class="card-header">
+        <h3>Attendance Progress Trend</h3>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Weekly View (May 2026)</span>
+      </div>
+      <div class="chart-container">
+        <canvas #attendanceTrendChart id="attendance-trend-chart"></canvas>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <div class="card-header">
+        <h3>Today's Real-time Check-ins</h3>
+        <i data-lucide="clock" style="width: 16px; height: 16px; color: var(--text-muted);"></i>
+      </div>
+      <div class="recent-list">
+        <div *ngIf="recentCheckins.length === 0" style="text-align: center; color: var(--text-muted); padding: 40px 0; font-size: 0.85rem;">
+          No check-ins recorded today yet.
+        </div>
+        <div class="recent-item" *ngFor="let record of recentCheckins">
+          <div class="recent-info">
+            <div class="recent-avatar">{{ getInitials(record.name) }}</div>
+            <div class="recent-details">
+              <h4>{{ record.name }}</h4>
+              <p>Roll No: {{ record.roll }}</p>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <span class="scan-status-badge present">{{ record.time }}</span>
+            <p style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;">Checked In</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

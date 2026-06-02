@@ -1,0 +1,83 @@
+<section class="page-section animated-fade-in active">
+  <div class="page-header">
+    <div class="page-header-info">
+      <h2>Student Camera Scanner</h2>
+      <p>Access device camera to scan student QR badges and record instant check-ins.</p>
+    </div>
+  </div>
+
+  <div class="scanner-view-container">
+    <div class="glass-card scanner-card">
+      <div class="qr-reader-wrapper">
+        <div class="scanner-laser" id="scanner-laser-element" [ngStyle]="{ display: isScanning ? 'block' : 'none' }"></div>
+        <div #qrScannerElement id="qr-scanner-element"></div>
+      </div>
+
+      <div class="scanner-controls">
+        <button class="btn btn-primary" type="button" (click)="startQRScanner()" [style.display]="isScanning ? 'none' : 'inline-flex'">
+          <i data-lucide="play" style="width: 16px; height: 16px;"></i>
+          <span>Start Camera</span>
+        </button>
+        <button class="btn btn-danger" type="button" (click)="stopQRScanner()" [style.display]="isScanning ? 'inline-flex' : 'none'">
+          <i data-lucide="square" style="width: 16px; height: 16px;"></i>
+          <span>Stop Camera</span>
+        </button>
+        <button class="btn btn-secondary" type="button" (click)="toggleCameraFacing()">
+          <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
+          <span>Switch Camera</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="scan-feedback-panel">
+      <div class="scan-status-indicator" [ngClass]="scannerStatusClass">
+        <div class="scan-status-circle">
+          <i [attr.data-lucide]="statusIcon" style="width: 28px; height: 28px;"></i>
+        </div>
+        <div>
+          <h4>{{ statusTitle }}</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">{{ statusText }}</p>
+        </div>
+      </div>
+
+      <div class="glass-card" *ngIf="showLastScanned">
+        <div class="card-header" style="border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px;">
+          <h3 style="color: var(--success); display: flex; align-items: center; gap: 8px; font-size: 1.1rem;">
+            <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
+            Check-in Successful
+          </h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">{{ lastScannedTime }}</span>
+        </div>
+
+        <div style="display: flex; gap: 16px; align-items: center;">
+          <div style="width: 60px; height: 60px; border-radius: 12px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; color: var(--success);">
+            {{ lastScannedInitials }}
+          </div>
+          <div>
+            <h4 style="font-size: 1.15rem; font-weight: 700;">{{ lastScannedName }}</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Roll No: <span style="color: white; font-weight: 600;">{{ lastScannedRoll }}</span></p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">Trade: <span style="color: var(--primary);">ITI COPA (2025-26)</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="scanner-help-card">
+        <h4>Scanning Procedures</h4>
+        <ul>
+          <li>
+            <i data-lucide="check" style="width: 14px; height: 14px;"></i>
+            <span>Position the student's QR Badge inside the green/white viewfinder frame.</span>
+          </li>
+          <li>
+            <i data-lucide="check" style="width: 14px; height: 14px;"></i>
+            <span>Ensure proper ambient lighting so the camera captures QR details clearly.</span>
+          </li>
+          <li>
+            <i data-lucide="check" style="width: 14px; height: 14px;"></i>
+            <span>The scanner processes barcodes sequentially and displays successful status on match.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
