@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>COPA ITI - QR Attendance Management System</title>
-  
+  <title>Anantrao Pawar Government Industrial Training Institute, Malegaon BK, Baramati, Pune</title>
   <!-- Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,19 +29,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
-    /* DESIGN SYSTEM: Modern Cyber-Tech / Indigo Glassmorphism Palette */
+    /* DESIGN SYSTEM: Modern Government Tech / Teal Glassmorphism Palette */
     :root {
-      --bg-dark: #090a16;
-      --bg-card: rgba(18, 20, 38, 0.7);
-      --bg-card-hover: rgba(26, 29, 56, 0.85);
+      --bg-dark: #071312;
+      --bg-card: rgba(14, 32, 30, 0.74);
+      --bg-card-hover: rgba(20, 48, 45, 0.88);
+      --bg-nav: rgba(7, 19, 18, 0.88);
+      --bg-sidebar: rgba(7, 19, 18, 0.58);
+      --bg-footer: rgba(7, 19, 18, 0.92);
       --border-color: rgba(255, 255, 255, 0.08);
-      --border-glow: rgba(99, 102, 241, 0.35);
+      --border-glow: rgba(20, 184, 166, 0.38);
       
-      --primary: #6366f1;
-      --primary-hover: #4f46e5;
-      --primary-glow: rgba(99, 102, 241, 0.4);
+      --primary: #14b8a6;
+      --primary-hover: #0f9488;
+      --primary-glow: rgba(20, 184, 166, 0.36);
       
-      --secondary: #a855f7;
+      --secondary: #38bdf8;
       --success: #10b981;
       --success-glow: rgba(16, 185, 129, 0.2);
       --warning: #f59e0b;
@@ -55,9 +57,25 @@
       
       --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.5);
       --shadow-md: 0 12px 24px -6px rgba(0, 0, 0, 0.6);
-      --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.15);
+      --shadow-glow: 0 0 25px rgba(20, 184, 166, 0.14);
       
       --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.light-mode {
+      --bg-dark: #eef7f6;
+      --bg-card: rgba(255, 255, 255, 0.82);
+      --bg-card-hover: rgba(255, 255, 255, 0.96);
+      --bg-nav: rgba(255, 255, 255, 0.9);
+      --bg-sidebar: rgba(255, 255, 255, 0.76);
+      --bg-footer: rgba(255, 255, 255, 0.92);
+      --border-color: rgba(15, 23, 42, 0.12);
+      --border-glow: rgba(15, 148, 136, 0.32);
+      --text-main: #10201f;
+      --text-muted: #64748b;
+      --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.12);
+      --shadow-md: 0 12px 24px -6px rgba(15, 23, 42, 0.18);
+      --shadow-glow: 0 0 25px rgba(20, 184, 166, 0.1);
     }
 
     * {
@@ -76,8 +94,8 @@
     body {
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(at 10% 20%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
-        radial-gradient(at 90% 80%, rgba(168, 85, 247, 0.1) 0px, transparent 50%);
+        radial-gradient(at 12% 18%, rgba(20, 184, 166, 0.12) 0px, transparent 50%),
+        radial-gradient(at 88% 76%, rgba(56, 189, 248, 0.09) 0px, transparent 50%);
       background-attachment: fixed;
       color: var(--text-main);
       font-family: var(--font-body);
@@ -86,6 +104,83 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+    }
+
+    body.light-mode {
+      background-image:
+        radial-gradient(at 12% 18%, rgba(20, 184, 166, 0.12) 0px, transparent 50%),
+        radial-gradient(at 88% 76%, rgba(56, 189, 248, 0.12) 0px, transparent 50%);
+    }
+
+    body.light-mode .page-header-info h2,
+    body.light-mode .login-card h2 {
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: var(--text-main);
+      color: var(--text-main);
+    }
+
+    body.light-mode .nav-link,
+    body.light-mode .sidebar-menu-title,
+    body.light-mode .card-header h3,
+    body.light-mode .stat-card-info p,
+    body.light-mode .recent-details h4,
+    body.light-mode .modal-header h3,
+    body.light-mode .input-group label,
+    body.light-mode .filter-group label,
+    body.light-mode .editable-days-group label,
+    body.light-mode #report-output-title {
+      color: var(--text-main) !important;
+      -webkit-text-fill-color: var(--text-main) !important;
+    }
+
+    body.light-mode .nav-link.active {
+      color: var(--text-main);
+      background: rgba(20, 184, 166, 0.14);
+      border-color: rgba(20, 184, 166, 0.3);
+    }
+
+    body.light-mode .table-container,
+    body.light-mode .modern-table th,
+    body.light-mode .modern-table tr:hover td,
+    body.light-mode .search-input-wrapper input,
+    body.light-mode .select-dropdown,
+    body.light-mode .date-input,
+    body.light-mode .editable-days-input,
+    body.light-mode .input-group input,
+    body.light-mode .input-wrapper input,
+    body.light-mode textarea {
+      background: rgba(255, 255, 255, 0.86) !important;
+      color: var(--text-main) !important;
+      border-color: var(--border-color) !important;
+    }
+
+    body.light-mode .modern-table th,
+    body.light-mode .modern-table td {
+      color: var(--text-main);
+      border-bottom-color: rgba(15, 23, 42, 0.08);
+    }
+
+    body.light-mode .search-input-wrapper input::placeholder,
+    body.light-mode .input-group input::placeholder,
+    body.light-mode .input-wrapper input::placeholder,
+    body.light-mode textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    body.light-mode .date-input::-webkit-calendar-picker-indicator {
+      filter: none;
+    }
+
+    body.light-mode [style*="color: white"],
+    body.light-mode [style*="color:white"] {
+      color: var(--text-main) !important;
+    }
+
+    body.light-mode [style*="background: rgba(15,17,32"],
+    body.light-mode [style*="background: rgba(15, 17, 32"],
+    body.light-mode [style*="background: rgba(0, 0, 0"] {
+      background: rgba(255, 255, 255, 0.86) !important;
     }
 
     button,
@@ -129,8 +224,8 @@
       to { opacity: 1; transform: translateY(0); }
     }
     @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
-      50% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.4); }
+      0%, 100% { box-shadow: 0 0 15px rgba(20, 184, 166, 0.2); }
+      50% { box-shadow: 0 0 30px rgba(20, 184, 166, 0.4); }
     }
     @keyframes scanline {
       0% { top: 0%; }
@@ -186,7 +281,7 @@
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       margin-bottom: 24px;
-      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+      box-shadow: 0 8px 24px rgba(20, 184, 166, 0.34);
     }
 
     .login-card h2 {
@@ -318,7 +413,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 16px 40px;
-      background: rgba(9, 10, 22, 0.85);
+      background: var(--bg-nav);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color);
@@ -375,6 +470,26 @@
       display: flex;
       align-items: center;
       gap: 16px;
+    }
+
+    .theme-toggle-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(20, 184, 166, 0.1);
     }
 
     .user-badge {
@@ -437,7 +552,7 @@
     /* SIDEBAR NAVIGATION */
     .sidebar {
       width: 260px;
-      background: rgba(9, 10, 22, 0.5);
+      background: var(--bg-sidebar);
       border-right: 1px solid var(--border-color);
       padding: 24px 16px;
       display: flex;
@@ -714,6 +829,158 @@
       background: rgba(16, 185, 129, 0.12);
       color: var(--success);
       border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .today-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .today-strip-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .today-strip-label {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .today-strip-value {
+      color: var(--text-main);
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .holiday-card {
+      margin-bottom: 32px;
+    }
+
+    .calendar-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .calendar-nav-btn {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .calendar-nav-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(20, 184, 166, 0.1);
+    }
+
+    .holiday-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .calendar-weekday {
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .calendar-day {
+      min-height: 56px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 7px;
+      background: rgba(255, 255, 255, 0.025);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .calendar-day.current {
+      border-color: var(--primary);
+      box-shadow: inset 0 0 0 1px rgba(20, 184, 166, 0.28);
+      color: white;
+    }
+
+    .calendar-day.holiday {
+      border-color: rgba(245, 158, 11, 0.45);
+      background: rgba(245, 158, 11, 0.1);
+      color: white;
+    }
+
+    .calendar-date-number {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .calendar-holiday-name {
+      display: block;
+      color: var(--warning);
+      font-size: 0.64rem;
+      line-height: 1.25;
+    }
+
+    .holiday-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .holiday-list-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.025);
+      font-size: 0.82rem;
+    }
+
+    .holiday-list-item strong {
+      color: white;
+    }
+
+    .holiday-list-item span {
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 700px) {
+      .today-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-day {
+        min-height: 44px;
+        padding: 5px;
+      }
+
+      .calendar-holiday-name {
+        display: none;
+      }
     }
 
     /* QR SCANNER VIEW */
@@ -1784,7 +2051,7 @@
     /* FOOTER */
     .app-footer {
       padding: 20px 40px;
-      background: rgba(9, 10, 22, 0.9);
+      background: var(--bg-footer);
       border-top: 1px solid var(--border-color);
       display: flex;
       align-items: center;
@@ -1846,6 +2113,7 @@
       <div class="logo-badge">
         <i data-lucide="qr-code" style="width: 32px; height: 32px;"></i>
       </div>
+      <h1>Anantrao Pawar Government Industrial Training Institute, Malegaon BK, Baramati, Pune</h1>
       <h2>ITI COPA Portal</h2>
       <p>Secure Attendance Scanning Platform</p>
       
@@ -1889,12 +2157,15 @@
           <i data-lucide="qr-code" style="width: 22px; height: 22px;"></i>
         </div>
         <div class="nav-title">
-          <h1>ITI COPA Attendance</h1>
+           <h1>Anantrao Pawar Government Industrial Training Institute, Malegaon BK, Baramati, Pune</h1>
           <span>DEPARTMENT OF COMPUTER OPERATOR & PROGRAMMING ASSISTANT</span>
         </div>
       </div>
       
       <div class="nav-user">
+        <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Switch to light mode">
+          <i id="theme-toggle-icon" data-lucide="sun" style="width: 18px; height: 18px;"></i>
+        </button>
         <div class="user-badge">
           <div class="user-avatar">A</div>
           <span class="user-name">Admin Instructor</span>
@@ -1947,6 +2218,21 @@
                 <i data-lucide="aperture" style="width: 16px; height: 16px;"></i>
                 <span>Open Scanner</span>
               </button>
+            </div>
+          </div>
+
+          <div class="today-strip">
+            <div class="today-strip-item">
+              <span class="today-strip-label">Current Day</span>
+              <span class="today-strip-value" id="today-display-date">--</span>
+            </div>
+            <div class="today-strip-item">
+              <span class="today-strip-label">Present Day Percentage</span>
+              <span class="today-strip-value" id="today-present-percentage">0%</span>
+            </div>
+            <div class="today-strip-item">
+              <span class="today-strip-label">Holiday Status</span>
+              <span class="today-strip-value" id="today-holiday-status">Working Day</span>
             </div>
           </div>
 
@@ -2034,7 +2320,7 @@
             <div class="glass-card">
               <div class="card-header">
                 <h3>Attendance Progress Trend</h3>
-                <span style="font-size: 0.8rem; color: var(--text-muted);">Weekly View (May 2026)</span>
+                <span id="trend-period-label" style="font-size: 0.8rem; color: var(--text-muted);">Current Week</span>
               </div>
               <div class="chart-container">
                 <canvas id="attendance-trend-chart"></canvas>
@@ -2050,6 +2336,23 @@
                 <!-- Dynamically generated check-ins -->
               </div>
             </div>
+          </div>
+
+          <div class="glass-card holiday-card">
+            <div class="card-header">
+              <h3>Maharashtra Government Holiday Calendar</h3>
+              <div class="calendar-header-actions">
+                <button class="calendar-nav-btn" onclick="changeHolidayCalendarMonth(-1)" title="Previous month">
+                  <i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i>
+                </button>
+                <span id="holiday-calendar-month" style="font-size: 0.8rem; color: var(--text-muted); min-width: 120px; text-align: center;">2026</span>
+                <button class="calendar-nav-btn" onclick="changeHolidayCalendarMonth(1)" title="Next month">
+                  <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="holiday-calendar-grid" id="holiday-calendar-grid"></div>
+            <div class="holiday-list" id="holiday-upcoming-list"></div>
           </div>
         </section>
 
@@ -2268,10 +2571,8 @@
                 <!-- Monthly Specific Pickers -->
                 <div id="report-monthly-picker-container" class="editable-days-group" style="display: none;">
                   <label for="report-month-picker" style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);">Select Month</label>
-                  <select id="report-month-picker" class="select-dropdown" onchange="generateReport()">
-                    <option value="05">May 2026</option>
-                    <option value="04">April 2026</option>
-                    <option value="03">March 2026</option>
+                  <select id="report-month-picker" class="select-dropdown" onchange="updateWorkingDaysForSelectedMonth(); generateReport();">
+                    <option value="">Current Month</option>
                   </select>
 
                   <label for="report-working-days" style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted); margin-left: 10px;">Total Working Days</label>
@@ -2481,13 +2782,43 @@
       { roll: 'COPA19', name: 'Ganesh Waghmode', trade: 'COPA-A', session: '2025-2026' }
     ];
 
-    // Seed attendance records for past 7 days to give graphs beautiful preloaded data
-    const SEED_DATES = ['2026-05-18', '2026-05-19', '2026-05-20', '2026-05-21', '2026-05-22', '2026-05-23', '2026-05-24'];
+    const MAHARASHTRA_HOLIDAYS_2026 = [
+      { date: '2026-01-26', name: 'Republic Day' },
+      { date: '2026-02-15', name: 'Mahashivratri' },
+      { date: '2026-02-19', name: 'Chhatrapati Shivaji Maharaj Jayanti' },
+      { date: '2026-03-03', name: 'Holi (Second Day)' },
+      { date: '2026-03-19', name: 'Gudhi Padwa' },
+      { date: '2026-03-21', name: 'Ramzan-Id' },
+      { date: '2026-03-26', name: 'Ram Navami' },
+      { date: '2026-03-31', name: 'Mahavir Janmakalyanak' },
+      { date: '2026-04-03', name: 'Good Friday' },
+      { date: '2026-04-14', name: 'Dr. Babasaheb Ambedkar Jayanti' },
+      { date: '2026-05-01', name: 'Maharashtra Din' },
+      { date: '2026-05-01', name: 'Buddha Pournima' },
+      { date: '2026-05-28', name: 'Bakri ID' },
+      { date: '2026-06-26', name: 'Moharum' },
+      { date: '2026-08-15', name: 'Independence Day' },
+      { date: '2026-08-15', name: 'Parsi New Year' },
+      { date: '2026-08-26', name: 'Id-E-Milad' },
+      { date: '2026-09-14', name: 'Ganesh Chaturthi' },
+      { date: '2026-10-02', name: 'Mahatma Gandhi Jayanti' },
+      { date: '2026-10-20', name: 'Dasara' },
+      { date: '2026-11-08', name: 'Diwali Amavasya' },
+      { date: '2026-11-10', name: 'Diwali (Bali Pratipada)' },
+      { date: '2026-11-11', name: 'Bhaubeej' },
+      { date: '2026-11-24', name: 'Guru Nanak Jayanti' },
+      { date: '2026-12-25', name: 'Christmas' }
+    ];
+
+    function getRecentDateStrings(days = 7) {
+      return Array.from({ length: days }, (_, index) => getLocalDateString(index - days + 1));
+    }
     
     function generateSeedAttendance() {
       const records = [];
+      const seedDates = getRecentDateStrings(8).slice(0, 7);
       // Generate some realistic attendance for past days
-      SEED_DATES.forEach(date => {
+      seedDates.forEach(date => {
         DEFAULT_STUDENTS.forEach(student => {
           // 85% chance student was present on any given seed day
           const isPresent = Math.random() < 0.88;
@@ -2537,23 +2868,27 @@
     let cameraFacingMode = "environment"; // default back camera
     let attendanceChartInstance = null;
     let currentActiveTab = "dashboard";
+    let holidayCalendarViewDate = new Date();
     // Flag to prevent multiple scan processing per session.
     let isScanLocked = false;
 
     // CORE EVENT LISTENERS
     window.addEventListener('DOMContentLoaded', () => {
+      applyStoredTheme();
       lucide.createIcons();
       
       // Auto-set the record filters date to current local date
       const todayString = getLocalDateString();
       document.getElementById('filter-date').value = todayString;
       document.getElementById('report-date-picker').value = todayString;
+      populateReportMonths();
       
       // Setup Charting
       renderAttendanceChart();
       
       // Render Initial State
       refreshDashboardStats();
+      renderHolidayCalendar();
       renderAttendanceTable();
       renderStudents();
       generateReport();
@@ -2574,9 +2909,49 @@
       return `${year}-${month}-${day}`;
     }
 
+    function formatDisplayDate(dateString, options = {}) {
+      const [year, month, day] = dateString.split('-').map(Number);
+      return new Date(year, month - 1, day).toLocaleDateString('en-IN', {
+        weekday: options.weekday || undefined,
+        day: '2-digit',
+        month: options.month || 'short',
+        year: options.year || 'numeric'
+      });
+    }
+
+    function getHoliday(dateString) {
+      const holidays = MAHARASHTRA_HOLIDAYS_2026.filter(h => h.date === dateString);
+      if (!holidays.length) return null;
+      return {
+        date: dateString,
+        name: holidays.map(h => h.name).join(' / ')
+      };
+    }
+
     function saveState() {
       localStorage.setItem('copa_students', JSON.stringify(database.students));
       localStorage.setItem('copa_attendance', JSON.stringify(database.attendance));
+    }
+
+    function applyTheme(mode) {
+      const isLight = mode === 'light';
+      document.body.classList.toggle('light-mode', isLight);
+      localStorage.setItem('copa_theme', isLight ? 'light' : 'dark');
+
+      const icon = document.getElementById('theme-toggle-icon');
+      const button = document.getElementById('theme-toggle-btn');
+      if (icon) icon.setAttribute('data-lucide', isLight ? 'moon' : 'sun');
+      if (button) button.title = isLight ? 'Switch to dark mode' : 'Switch to light mode';
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function applyStoredTheme() {
+      applyTheme(localStorage.getItem('copa_theme') || 'dark');
+    }
+
+    function toggleTheme() {
+      const nextMode = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+      applyTheme(nextMode);
     }
 
     // TOAST NOTIFICATIONS
@@ -2632,6 +3007,7 @@
       
       // Trigger animations and resize charts
       refreshDashboardStats();
+      renderHolidayCalendar();
       setTimeout(() => {
         if (attendanceChartInstance) {
           attendanceChartInstance.resize();
@@ -2665,6 +3041,7 @@
       // Tab specific actions
       if (tabId === 'dashboard') {
         refreshDashboardStats();
+        renderHolidayCalendar();
       } else if (tabId === 'records') {
         renderAttendanceTable();
       } else if (tabId === 'students') {
@@ -2697,6 +3074,11 @@
       document.getElementById('progress-present-rate').style.width = `${presentRate}%`;
       document.getElementById('stat-absent-rate').textContent = `${absentRate}%`;
       document.getElementById('progress-absent-rate').style.width = `${absentRate}%`;
+
+      const todayHoliday = getHoliday(today);
+      document.getElementById('today-display-date').textContent = formatDisplayDate(today, { weekday: 'short' });
+      document.getElementById('today-present-percentage').textContent = `${presentRate}%`;
+      document.getElementById('today-holiday-status').textContent = todayHoliday ? todayHoliday.name : 'Working Day';
       
       // Calculate overall Monthly Average Rate (based on seed days and live data)
       const allPresents = database.attendance.filter(r => r.status === 'Present').length;
@@ -2742,9 +3124,10 @@
     // CHART.JS ATTENDANCE DATA GENERATION
     function renderAttendanceChart() {
       const ctx = document.getElementById('attendance-trend-chart').getContext('2d');
+      const chartDates = getRecentDateStrings();
       
       // Calculate counts for the last 7 dates
-      const labels = SEED_DATES.map(date => {
+      const labels = chartDates.map(date => {
         const parts = date.split('-');
         return `${parts[2]}/${parts[1]}`; // DD/MM format
       });
@@ -2754,7 +3137,7 @@
         absent: []
       };
 
-      SEED_DATES.forEach(date => {
+      chartDates.forEach(date => {
         const dayAttendance = database.attendance.filter(r => r.date === date);
         const presentCount = dayAttendance.filter(r => r.status === 'Present').length;
         // Total students of database at that moment
@@ -2767,6 +3150,8 @@
         attendanceChartInstance.destroy();
       }
 
+      document.getElementById('trend-period-label').textContent = `Last 7 Days (${formatDisplayDate(chartDates[0])} - ${formatDisplayDate(chartDates[chartDates.length - 1])})`;
+
       attendanceChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -2775,8 +3160,8 @@
             {
               label: 'Present Students',
               data: datasets.present,
-              backgroundColor: 'rgba(99, 102, 241, 0.75)',
-              borderColor: 'rgb(99, 102, 241)',
+              backgroundColor: 'rgba(20, 184, 166, 0.75)',
+              borderColor: 'rgb(20, 184, 166)',
               borderWidth: 1.5,
               borderRadius: 6
             },
@@ -2813,6 +3198,104 @@
           }
         }
       });
+    }
+
+    function populateReportMonths() {
+      const monthPicker = document.getElementById('report-month-picker');
+      const today = new Date();
+      monthPicker.innerHTML = '';
+
+      for (let offset = 0; offset < 6; offset++) {
+        const monthDate = new Date(today.getFullYear(), today.getMonth() - offset, 1);
+        const value = `${monthDate.getFullYear()}-${String(monthDate.getMonth() + 1).padStart(2, '0')}`;
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = monthDate.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+        monthPicker.appendChild(option);
+      }
+
+      updateWorkingDaysForSelectedMonth();
+    }
+
+    function countWorkingDays(monthValue) {
+      const [year, month] = monthValue.split('-').map(Number);
+      const daysInMonth = new Date(year, month, 0).getDate();
+      let count = 0;
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month - 1, day);
+        const dateString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const isSunday = date.getDay() === 0;
+        if (!isSunday && !getHoliday(dateString)) count++;
+      }
+
+      return count;
+    }
+
+    function updateWorkingDaysForSelectedMonth() {
+      const monthPicker = document.getElementById('report-month-picker');
+      const workingDaysInput = document.getElementById('report-working-days');
+      if (!monthPicker || !workingDaysInput || !monthPicker.value) return;
+      workingDaysInput.value = countWorkingDays(monthPicker.value);
+    }
+
+    function changeHolidayCalendarMonth(offset) {
+      holidayCalendarViewDate = new Date(
+        holidayCalendarViewDate.getFullYear(),
+        holidayCalendarViewDate.getMonth() + offset,
+        1
+      );
+      renderHolidayCalendar();
+    }
+
+    function renderHolidayCalendar() {
+      const grid = document.getElementById('holiday-calendar-grid');
+      const list = document.getElementById('holiday-upcoming-list');
+      const monthLabel = document.getElementById('holiday-calendar-month');
+      if (!grid || !list || !monthLabel) return;
+
+      const todayString = getLocalDateString();
+      const year = holidayCalendarViewDate.getFullYear();
+      const month = holidayCalendarViewDate.getMonth();
+      const monthStart = new Date(year, month, 1);
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const monthPrefix = `${year}-${String(month + 1).padStart(2, '0')}`;
+
+      monthLabel.textContent = holidayCalendarViewDate.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+      grid.innerHTML = '';
+      ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
+        const cell = document.createElement('div');
+        cell.className = 'calendar-weekday';
+        cell.textContent = day;
+        grid.appendChild(cell);
+      });
+
+      for (let blank = 0; blank < monthStart.getDay(); blank++) {
+        grid.appendChild(document.createElement('div'));
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateString = `${monthPrefix}-${String(day).padStart(2, '0')}`;
+        const holiday = getHoliday(dateString);
+        const cell = document.createElement('div');
+        cell.className = `calendar-day${dateString === todayString ? ' current' : ''}${holiday ? ' holiday' : ''}`;
+        cell.innerHTML = `
+          <span class="calendar-date-number">${day}</span>
+          ${holiday ? `<span class="calendar-holiday-name">${holiday.name}</span>` : ''}
+        `;
+        grid.appendChild(cell);
+      }
+
+      const upcoming = MAHARASHTRA_HOLIDAYS_2026.filter(h => h.date >= todayString).slice(0, 6);
+      list.innerHTML = upcoming.length
+        ? upcoming.map(h => `
+            <div class="holiday-list-item">
+              <strong>${h.name}</strong>
+              <span>${formatDisplayDate(h.date, { weekday: 'short' })}</span>
+            </div>
+          `).join('')
+        : '<div class="holiday-list-item"><strong>No remaining 2026 holidays</strong><span>Updated</span></div>';
+      lucide.createIcons();
     }
 
     // QR SCANNER IMPLEMENTATION (html5-qrcode)
@@ -3493,14 +3976,16 @@
         document.getElementById('report-badge-1').textContent = `Strength: ${database.students.length}`;
         document.getElementById('report-badge-2').textContent = `Present: ${presentCount}`;
         document.getElementById('report-badge-3').textContent = `Absent: ${absentCount}`;
+        document.getElementById('report-badge-3').style.display = 'inline-flex';
       } 
       else {
         // MONTHLY REPORT
         const selectedMonth = document.getElementById('report-month-picker').value;
         const workingDays = parseInt(document.getElementById('report-working-days').value) || 24;
+        const selectedMonthLabel = document.getElementById('report-month-picker').selectedOptions[0]?.textContent || selectedMonth;
         
         document.getElementById('report-output-title').textContent = "Monthly Attendance Percent Matrix";
-        document.getElementById('report-output-subtitle').textContent = `Period: Month of May 2026 | Working days calculated: ${workingDays}`;
+        document.getElementById('report-output-subtitle').textContent = `Period: ${selectedMonthLabel} | Working days calculated: ${workingDays}`;
 
         table.innerHTML = `
           <thead>
@@ -3521,10 +4006,10 @@
         let totalSumPercent = 0;
 
         database.students.forEach(student => {
-          // Count present days in selected month (e.g. date matching 2026-05-XX)
+          // Count present days in the selected local month.
           const monthlyRecords = database.attendance.filter(r => 
             r.roll === student.roll && 
-            r.date.startsWith(`2026-${selectedMonth}`)
+            r.date.startsWith(selectedMonth)
           );
           
           const attendedDays = monthlyRecords.filter(r => r.status === 'Present').length;
@@ -3618,7 +4103,7 @@
         const workingDays = parseInt(document.getElementById('report-working-days').value) || 24;
         
         database.students.forEach(student => {
-          const monthlyRecords = database.attendance.filter(r => r.roll === student.roll && r.date.startsWith(`2026-${selectedMonth}`));
+          const monthlyRecords = database.attendance.filter(r => r.roll === student.roll && r.date.startsWith(selectedMonth));
           const attendedDays = monthlyRecords.filter(r => r.status === 'Present').length;
           const absentDays = Math.max(0, workingDays - attendedDays);
           const percent = Math.round((attendedDays / workingDays) * 100);
@@ -3635,7 +4120,7 @@
         const ws = XLSX.utils.json_to_sheet(dataToExport);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, `Monthly_Report_${selectedMonth}`);
-        XLSX.writeFile(wb, `Monthly_Summary_Report_05_2026.xlsx`);
+        XLSX.writeFile(wb, `Monthly_Summary_Report_${selectedMonth}.xlsx`);
       }
       showToast('Roster Report exported successfully as Excel.', 'success');
     }
