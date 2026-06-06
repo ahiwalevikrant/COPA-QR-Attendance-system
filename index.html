@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Anantrao Pawar Government Industrial Training Institute, Malegaon BK, Baramati, Pune</title>
+  <link rel="icon" type="image/jpeg" href="logo.jpeg">
   <!-- Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -275,13 +276,21 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 68px;
-      height: 68px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: #ffffff;
+      padding: 8px;
       margin-bottom: 24px;
       box-shadow: 0 8px 24px rgba(20, 184, 166, 0.34);
+      overflow: hidden;
+    }
+
+    .logo-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .login-card h2 {
@@ -435,10 +444,18 @@
       justify-content: center;
       width: 42px;
       height: 42px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
+      border-radius: 50%;
+      background: #ffffff;
+      padding: 4px;
       box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      overflow: hidden;
+    }
+
+    .nav-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .nav-title {
@@ -2111,7 +2128,7 @@
   <div id="login-container" class="animated-fade-in">
     <div class="login-card">
       <div class="logo-badge">
-        <i data-lucide="qr-code" style="width: 32px; height: 32px;"></i>
+        <img src="logo.jpeg" alt="Anantrao Pawar Government ITI logo">
       </div>
       <h1>Anantrao Pawar Government Industrial Training Institute, Malegaon BK, Baramati, Pune</h1>
       <h2>ITI COPA Portal</h2>
@@ -2154,7 +2171,7 @@
     <header class="navbar">
       <div class="nav-logo-section">
         <div class="nav-logo">
-          <i data-lucide="qr-code" style="width: 22px; height: 22px;"></i>
+          <img src="logo.jpeg" alt="Anantrao Pawar Government ITI logo">
         </div>
         <div class="nav-title">
            <h1>Anantrao Pawar Government Industrial Training Institute, Malegaon BK, Baramati, Pune</h1>
@@ -2872,10 +2889,16 @@
     // Flag to prevent multiple scan processing per session.
     let isScanLocked = false;
 
+    function renderIcons(options) {
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons(options);
+      }
+    }
+
     // CORE EVENT LISTENERS
     window.addEventListener('DOMContentLoaded', () => {
       applyStoredTheme();
-      lucide.createIcons();
+      renderIcons();
       
       // Auto-set the record filters date to current local date
       const todayString = getLocalDateString();
@@ -2942,7 +2965,7 @@
       const button = document.getElementById('theme-toggle-btn');
       if (icon) icon.setAttribute('data-lucide', isLight ? 'moon' : 'sun');
       if (button) button.title = isLight ? 'Switch to dark mode' : 'Switch to light mode';
-      if (window.lucide) lucide.createIcons();
+      renderIcons();
     }
 
     function applyStoredTheme() {
@@ -2971,7 +2994,7 @@
         <button class="toast-close" onclick="this.parentElement.remove()">×</button>
       `;
       container.appendChild(toast);
-      lucide.createIcons({attrs: {class: 'toast-icon ' + type}});
+      renderIcons({attrs: {class: 'toast-icon ' + type}});
       
       setTimeout(() => {
         toast.style.animation = 'toastIn 0.3s ease-out reverse forwards';
@@ -3123,8 +3146,32 @@
 
     // CHART.JS ATTENDANCE DATA GENERATION
     function renderAttendanceChart() {
-      const ctx = document.getElementById('attendance-trend-chart').getContext('2d');
+      const chartCanvas = document.getElementById('attendance-trend-chart');
+      if (!chartCanvas) return;
+
       const chartDates = getRecentDateStrings();
+      document.getElementById('trend-period-label').textContent = `Last 7 Days (${formatDisplayDate(chartDates[0])} - ${formatDisplayDate(chartDates[chartDates.length - 1])})`;
+
+      if (!window.Chart) {
+        const container = chartCanvas.parentElement;
+        chartCanvas.style.display = 'none';
+        let fallback = document.getElementById('attendance-chart-offline-message');
+        if (!fallback && container) {
+          fallback = document.createElement('div');
+          fallback.id = 'attendance-chart-offline-message';
+          fallback.style.cssText = 'height: 100%; min-height: 220px; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--text-muted); font-size: 0.9rem; padding: 24px;';
+          container.appendChild(fallback);
+        }
+        if (fallback) {
+          fallback.textContent = 'Attendance chart is unavailable offline, but dashboard data and login continue to work.';
+        }
+        return;
+      }
+
+      chartCanvas.style.display = 'block';
+      const fallback = document.getElementById('attendance-chart-offline-message');
+      if (fallback) fallback.remove();
+      const ctx = chartCanvas.getContext('2d');
       
       // Calculate counts for the last 7 dates
       const labels = chartDates.map(date => {
@@ -3149,8 +3196,6 @@
       if (attendanceChartInstance) {
         attendanceChartInstance.destroy();
       }
-
-      document.getElementById('trend-period-label').textContent = `Last 7 Days (${formatDisplayDate(chartDates[0])} - ${formatDisplayDate(chartDates[chartDates.length - 1])})`;
 
       attendanceChartInstance = new Chart(ctx, {
         type: 'bar',
@@ -3295,7 +3340,7 @@
             </div>
           `).join('')
         : '<div class="holiday-list-item"><strong>No remaining 2026 holidays</strong><span>Updated</span></div>';
-      lucide.createIcons();
+      renderIcons();
     }
 
     // QR SCANNER IMPLEMENTATION (html5-qrcode)
@@ -3322,11 +3367,17 @@
       document.getElementById('scanner-status-icon').setAttribute('data-lucide', 'aperture');
       document.getElementById('scanner-status-title').textContent = 'Camera System Standby';
       document.getElementById('scanner-status-text').textContent = 'Click "Start Camera" to initiate attendance scanning mode.';
-      lucide.createIcons();
+      renderIcons();
       isScanLocked = false;
     }
 
     async function startQRScanner() {
+      if (!window.Html5Qrcode) {
+        showToast('QR scanner library is unavailable offline. Login and manual attendance still work.', 'warning');
+        setScannerIdleState();
+        return;
+      }
+
       if (html5QrcodeScanner) {
         await stopQRScanner(false);
       }
@@ -3344,7 +3395,7 @@
       document.getElementById('scanner-status-icon').setAttribute('data-lucide', 'loader');
       document.getElementById('scanner-status-title').textContent = 'Camera Streaming Engaged';
       document.getElementById('scanner-status-text').textContent = 'Position student QR identity badge in front of camera lens.';
-      lucide.createIcons();
+      renderIcons();
       // Ensure scanning is unlocked when starting.
       isScanLocked = false;
 
@@ -3475,7 +3526,7 @@
       document.getElementById('scanner-status-icon').setAttribute('data-lucide', 'check');
       document.getElementById('scanner-status-title').textContent = 'Match Decoded';
       document.getElementById('scanner-status-text').textContent = `Check-in recorded for student: ${student.name}`;
-      lucide.createIcons();
+      renderIcons();
 
       // Set Scanned Badge Profile details
       document.getElementById('scan-feedback-time').textContent = timeNow;
@@ -3560,7 +3611,7 @@
         tbody.appendChild(row);
       });
 
-      lucide.createIcons();
+      renderIcons();
     }
 
     function toggleAttendanceStatus(roll, date) {
@@ -3665,7 +3716,7 @@
         grid.appendChild(card);
       });
 
-      lucide.createIcons();
+      renderIcons();
     }
 
     function deleteStudent(roll) {
@@ -3751,6 +3802,17 @@
       document.getElementById('qr-modal-roll').textContent = roll;
       
       currentQRBadgeDetails = { roll, name };
+
+      if (!window.QRCode) {
+        qrBox.innerHTML = `
+          <div style="height: 180px; width: 180px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; color: #475569; border: 1px dashed #cbd5e1; border-radius: 8px; font-size: 0.85rem;">
+            QR generator unavailable offline
+          </div>
+        `;
+        openModal('modal-qr-badge');
+        showToast('QR badge generator library is unavailable offline.', 'warning');
+        return;
+      }
 
       // QR generator
       new QRCode(qrBox, {
@@ -4050,11 +4112,16 @@
         document.getElementById('report-badge-3').style.display = 'none'; // hide unnecessary badge for monthly
       }
 
-      lucide.createIcons();
+      renderIcons();
     }
 
     // EXCEL EXPORTS (SheetJS API)
     function exportToExcel() {
+      if (!window.XLSX) {
+        showToast('Excel export library is unavailable offline.', 'warning');
+        return;
+      }
+
       if (database.attendance.length === 0) {
         showToast('No attendance records available to export.', 'warning');
         return;
@@ -4078,6 +4145,11 @@
     }
 
     function exportReportExcel() {
+      if (!window.XLSX) {
+        showToast('Excel export library is unavailable offline.', 'warning');
+        return;
+      }
+
       const level = document.getElementById('report-select-type').value;
       const dataToExport = [];
       
@@ -4127,6 +4199,11 @@
 
     // PDF EXPORTS (jsPDF & AutoTable API)
     function exportToPDF() {
+      if (!window.jspdf || !window.jspdf.jsPDF) {
+        showToast('PDF export library is unavailable offline.', 'warning');
+        return;
+      }
+
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       
